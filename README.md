@@ -1,0 +1,4 @@
+hminfo
+======
+
+Homematic weather info
