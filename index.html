@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <link rel="apple-touch-icon" href="icon.png">
+   <link rel="apple-touch-startup-image" href="startup.png">
+   <link rel="stylesheet" href="iui/iui.css" type="text/css" />
+   <link rel="stylesheet" href="iui/t/default/default-theme.css" type="text/css"/>
+   <script type="application/x-javascript" src="iui/iui.js"></script>
+   <script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+  $(function() {
+
+    // temperatura HM zunaj
+    $.get("http://192.168.101.47:8080/api/getPlainValue/HEQ0110682:1/TEMPERATURE", function(data){
+      jQuery(".tempHm").text(data.replace(".", ",") + ' \xB0C');
+    });
+
+    //vlaga HM zunaj
+    $.get("http://192.168.101.47:8080/api/getPlainValue/HEQ0110682:1/HUMIDITY", function(data){
+      jQuery(".humidityHm").text(data + '%');
+    });
+
+    // sončni zahod
+    $.get("http://192.168.101.47:8080/api/getPlainValue/19517", function(data){
+      jQuery(".sunsetDate").text(data);
+    });
+
+    // temperatura VP zunaj
+    $.get("http://192.168.101.47:8080/api/getPlainValue/15241", function(data){
+      jQuery(".tempVP").text(data.replace(".", ",") + ' \xB0C');
+    });
+
+    // razmere zunaj
+    $.get("http://192.168.101.47:8080/api/getPlainValue/15242", function(data){
+      jQuery(".conditionsText").text(data);
+    });
+
+    // razmere datum zunaj
+    $.get("http://192.168.101.47:8080/api/getPlainValue/15243", function(data){
+      jQuery(".conditionsDate").text(data);
+    });
+  });
+ 
+</script>
+   <div class="toolbar">
+      <h1 id="pageTitle">HomePublic</h1>
+      <a id="backButton" class="button" href="#"></a>
+   </div>
+
+<div id="home" class="panel" selected="true">
+  <fieldset>
+      <div class="row">
+          <label>Dobrodošli na VP Bežigrad.</label>
+      </div>
+  </fieldset>
+  <h2>Splošno</h2>
+  <fieldset>
+      <div class="row">
+          <label>Temperatura</label>
+          <span class="tempHm"></span>
+      </div>
+      <div class="row">
+          <label>Vlaga</label>
+          <span class="humidityHm"></span>
+      </div>
+      <div class="row">
+          <label>Sončni zahod</label>
+          <span class="sunsetDate">
+            <!--<?php $sz = gethmvar("192.168.101.25","Soncni_zahod_ura");
+              //echo gethmvar("192.168.101.25","Soncni_zahod_ura"); 
+              $sz_diff = date_diff_x(date("Y-m-d").' '.$sz);
+              echo $sz;
+              if ($sz_diff != '') {
+                echo ' ('.$sz_diff.')';
+              }
+            ?>-->
+          </span>
+      </div>
+  </fieldset>
+
+  <h2>Vremenska postaja</h2>
+    <fieldset>
+      <div class="row">
+          <label>Temperatura</label>
+          <span class="tempVP">span>    
+      </div>
+      <div class="row">
+          <label>Razmere</label>
+          <span class="conditionsText"><span>
+      </div>
+      <div class="row">
+          <label>Posodobitev</label>
+          <span class="conditionsDate"></span>
+      </div>
+  </fieldset>
+
+</div>
+
+</body>
+</html>
